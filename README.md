@@ -39,9 +39,23 @@ Using **Kafka-UI**, we can inspect the raw JSON messages to ensure the schema an
 ### 4. Real-Time Analytics (Fabric & Spark)
 In Microsoft Fabric, we use a **Sliding Window** aggregation. The system calculates the average temperature for **5-minute windows**, updating every **1 minute**.
 
-```python
-# Analytical Aggregation: 5-minute window, 1-minute slide
-avg_temp_df = weather_df \
-    .withWatermark("timestamp", "10 minutes") \
-    .groupBy(window(col("timestamp"), "5 minutes", "1 minute")) \
-    .agg(avg("temperature").alias("avg_temperature"))
+### 5. Final Storage (Delta Table)
+The processed data is saved as a **Delta Table** in the Lakehouse, providing a structured historical record for reporting.
+
+<img width="1919" height="1079" alt="4 fabric" src="https://github.com/user-attachments/assets/6d847a27-96c2-4afd-a6a7-5f09852cd673" />
+*Figure 4: The final avg_temperature table in Microsoft Fabric.*
+
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+| :--- | :--- |
+| **Language** | Python, PySpark |
+| **Streaming** | Apache Kafka |
+| **Containerization** | Docker |
+| **Cloud Platform** | Microsoft Fabric |
+| **Connectivity** | Ngrok |
+| **Table Format** | Delta Lake |
+
+---
